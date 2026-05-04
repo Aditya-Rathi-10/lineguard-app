@@ -8,7 +8,6 @@ import {
   ChevronRight,
   Filter,
   TrendingUp,
-  IndianRupee,
 } from 'lucide-react';
 import StatCard from '../components/ui/StatCard';
 import StatusBadge from '../components/ui/StatusBadge';
@@ -50,7 +49,7 @@ export default function Dashboard({ records, loading, newRecordTimestamps }) {
   const lastUpdated = useMemo(() => getLastUpdated(dateFilteredRecords), [dateFilteredRecords]);
   const theftsByDate = useMemo(() => getTheftsByDate(dateFilteredRecords), [dateFilteredRecords]);
   const areaStats = useMemo(() => getStatsByArea(dateFilteredRecords), [dateFilteredRecords]);
-  const totalFinancialLoss = useMemo(() => estimateFinancialLoss(dateFilteredRecords), [dateFilteredRecords]);
+
 
   const recentEvents = useMemo(() => {
     return dateFilteredRecords.filter((r) => r.theft).slice(0, 5);
@@ -63,8 +62,8 @@ export default function Dashboard({ records, loading, newRecordTimestamps }) {
           title="Dashboard"
           subtitle="Electricity Theft Detection System"
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {[1, 2, 3, 4].map((i) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+          {[1, 2, 3].map((i) => (
             <SkeletonCard key={i} />
           ))}
         </div>
@@ -102,7 +101,7 @@ export default function Dashboard({ records, loading, newRecordTimestamps }) {
       </PageHeader>
 
       {/* ─── Summary Cards ─── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         <StatCard
           title="Total Poles"
           value={uniquePoles.length}
@@ -116,13 +115,6 @@ export default function Dashboard({ records, loading, newRecordTimestamps }) {
           subtitle={theftToday > 0 ? 'Requires attention' : 'All clear'}
           icon={AlertTriangle}
           variant={theftToday > 0 ? 'danger' : 'success'}
-        />
-        <StatCard
-          title="Est. Daily Loss"
-          value={`₹${totalFinancialLoss.toLocaleString('en-IN')}`}
-          subtitle="Based on current loss rate"
-          icon={IndianRupee}
-          variant="danger"
         />
         <StatCard
           title="Last Theft Time"
