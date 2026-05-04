@@ -193,7 +193,7 @@ export function getCurrentLoss(input, output) {
 
 /**
  * Estimate financial loss in INR based on current difference.
- * Assume 1A loss roughly equates to ₹46/day.
+ * Assume 1A loss roughly equates to ₹0.46/unit.
  */
 export function estimateFinancialLoss(records) {
   let totalLossA = 0;
@@ -204,7 +204,7 @@ export function estimateFinancialLoss(records) {
       totalLossA += (inp - outp);
     }
   }
-  return Math.round(totalLossA * 46);
+  return Math.round(totalLossA * 0.46);
 }
 
 /**
