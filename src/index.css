@@ -1,0 +1,326 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base ─── */
+@layer base {
+  :root {
+    --color-bg: var(--surface-950);
+    --color-surface: var(--surface-900);
+    --color-surface-2: var(--surface-800);
+    --color-border: var(--surface-800);
+    --color-text: var(--surface-100);
+    --color-text-secondary: var(--surface-400);
+    --sidebar-width: 260px;
+    
+    /* Dark Theme (Default) */
+    --surface-50: 248 250 252;
+    --surface-100: 241 245 249;
+    --surface-200: 226 232 240;
+    --surface-300: 203 213 225;
+    --surface-400: 148 163 184;
+    --surface-500: 100 116 139;
+    --surface-600: 71 85 105;
+    --surface-700: 51 65 85;
+    --surface-800: 30 41 59;
+    --surface-900: 15 23 42;
+    --surface-950: 2 6 23;
+    --color-white: #ffffff;
+  }
+
+  .light-theme {
+    /* Light Theme - flipped surface colors */
+    --surface-950: 248 250 252;
+    --surface-900: 241 245 249;
+    --surface-800: 226 232 240;
+    --surface-700: 203 213 225;
+    --surface-600: 148 163 184;
+    --surface-500: 100 116 139;
+    --surface-400: 71 85 105;
+    --surface-300: 51 65 85;
+    --surface-200: 30 41 59;
+    --surface-100: 15 23 42;
+    --surface-50: 2 6 23;
+    --color-white: #0f172a;
+  }
+
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #334155 transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #334155;
+    border-radius: 3px;
+  }
+
+  body {
+    @apply bg-surface-950 text-surface-100 font-sans min-h-screen relative overflow-x-hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Beautiful Background Glows */
+  body::before, body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.15;
+    animation: drift 20s infinite alternate ease-in-out;
+  }
+
+  body::before {
+    top: -10%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, var(--brand-500, #8b5cf6) 0%, transparent 70%);
+  }
+
+  body::after {
+    bottom: -10%;
+    right: -10%;
+    width: 70vw;
+    height: 70vw;
+    background: radial-gradient(circle, var(--danger-500, #ef4444) 0%, transparent 70%);
+    animation-delay: -10s;
+  }
+
+  @keyframes drift {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(5%, 5%); }
+  }
+}
+
+/* ─── Components ─── */
+@layer components {
+  .glass-card {
+    @apply bg-surface-900/60 backdrop-blur-xl border border-surface-700/40 rounded-2xl;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300;
+  }
+
+  .glass-card-hover:hover {
+    @apply border-surface-600/60;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
+  }
+
+  .stat-card {
+    @apply glass-card p-5 relative overflow-hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-0.5;
+  }
+
+  .stat-card-danger::before {
+    @apply bg-gradient-to-r from-danger-500 to-danger-600;
+  }
+
+  .stat-card-success::before {
+    @apply bg-gradient-to-r from-success-500 to-success-600;
+  }
+
+  .stat-card-brand::before {
+    @apply bg-gradient-to-r from-brand-500 to-brand-600;
+  }
+
+  .stat-card-warning::before {
+    @apply bg-gradient-to-r from-warning-500 to-warning-600;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .badge-danger {
+    @apply badge bg-danger-500/15 text-danger-400 border border-danger-500/20;
+  }
+
+  .badge-success {
+    @apply badge bg-success-500/15 text-success-400 border border-success-500/20;
+  }
+
+  .badge-warning {
+    @apply badge bg-warning-500/15 text-warning-400 border border-warning-500/20;
+  }
+
+  .btn-primary {
+    @apply px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white rounded-xl font-medium transition-all duration-200 active:scale-[0.98];
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2 text-surface-300 hover:text-white hover:bg-surface-800 rounded-xl font-medium transition-all duration-200;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-2.5 bg-surface-800/60 border border-surface-700/50 rounded-xl text-surface-100 placeholder:text-surface-500 focus:outline-none focus:border-brand-500/50 focus:ring-2 focus:ring-brand-500/20 transition-all duration-200;
+  }
+
+  .table-row {
+    @apply border-b border-surface-800/50 transition-colors duration-150 hover:bg-surface-800/30;
+  }
+}
+
+/* ─── Utilities ─── */
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-400 to-brand-600;
+  }
+
+  .text-gradient-danger {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-danger-400 to-warning-400;
+  }
+
+  .animate-in {
+    animation: fadeSlideUp 0.5s ease-out both;
+  }
+
+  .animate-in-delay-1 {
+    animation: fadeSlideUp 0.5s ease-out 0.1s both;
+  }
+
+  .animate-in-delay-2 {
+    animation: fadeSlideUp 0.5s ease-out 0.2s both;
+  }
+
+  .animate-in-delay-3 {
+    animation: fadeSlideUp 0.5s ease-out 0.3s both;
+  }
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Leaflet Overrides ─── */
+.leaflet-container {
+  @apply bg-surface-900 rounded-2xl;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.leaflet-popup-content-wrapper {
+  @apply bg-surface-800 text-surface-100 rounded-xl border border-surface-700/50;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.leaflet-popup-tip {
+  @apply bg-surface-800;
+}
+
+.leaflet-popup-content {
+  margin: 12px 16px;
+  line-height: 1.5;
+}
+
+.leaflet-popup-close-button {
+  color: #94a3b8 !important;
+}
+
+.leaflet-control-zoom a {
+  @apply bg-surface-800 text-surface-200 border-surface-700;
+}
+
+.leaflet-control-zoom a:hover {
+  @apply bg-surface-700 text-white;
+}
+
+/* ─── Skeleton Animation ─── */
+.skeleton {
+  @apply bg-surface-800 rounded-xl relative overflow-hidden;
+}
+
+.skeleton::after {
+  content: '';
+  @apply absolute inset-0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ─── Pulse dot for live indicator ─── */
+.pulse-dot {
+  @apply relative;
+}
+
+.pulse-dot::before {
+  content: '';
+  @apply absolute w-2 h-2 bg-success-400 rounded-full;
+  top: 50%;
+  left: -16px;
+  transform: translateY(-50%);
+}
+
+.pulse-dot::after {
+  content: '';
+  @apply absolute w-2 h-2 bg-success-400 rounded-full;
+  top: 50%;
+  left: -16px;
+  transform: translateY(-50%);
+  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: translateY(-50%) scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* ─── Recharts Customization ─── */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: #1e293b;
+}
+
+.recharts-text {
+  fill: #64748b;
+  font-size: 12px;
+}
+
+/* ─── Highlight animation for new events ─── */
+@keyframes highlightNew {
+  0% {
+    background-color: rgba(251, 191, 36, 0.15);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.highlight-new {
+  animation: highlightNew 3s ease-out;
+}
