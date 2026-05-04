@@ -24,9 +24,11 @@ export async function fetchAllRecords() {
       return [];
     }
 
-    // Normalize timestamp field (some databases might use timestamp instead of createdAt)
+    // Normalize fields to match frontend expectations
     const normalizedData = recordsArray.map(record => ({
       ...record,
+      input: record.inCurrent !== undefined ? record.inCurrent : record.input,
+      output: record.outCurrent !== undefined ? record.outCurrent : record.output,
       createdAt: record.createdAt || record.timestamp || new Date().toISOString()
     }));
 
