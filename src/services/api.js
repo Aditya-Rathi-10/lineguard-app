@@ -1,11 +1,8 @@
 import axios from 'axios';
 
 const API_BASE_URL = 'https://esp-server-2yyj.onrender.com';
-const DEV_URL = 'http://localhost:3000';
 
-const isDev = import.meta.env.DEV;
-
-const API_URL = isDev ? DEV_URL : API_BASE_URL;
+const API_URL = API_BASE_URL;
 
 /**
  * Fetch all pole records from the real backend.

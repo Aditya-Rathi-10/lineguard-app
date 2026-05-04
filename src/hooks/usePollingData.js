@@ -33,7 +33,8 @@ export function usePollingData(intervalMs = 8000) {
           : `${updatesArray.length} statuses updated successfully`
       );
     } catch (err) {
-      toast.error("Failed to update status. Please try again.");
+      const errorMessage = err.response?.data?.error || err.message || "Unknown error";
+      toast.error(`Failed to update status: ${errorMessage}`);
       throw err;
     }
   }, []);

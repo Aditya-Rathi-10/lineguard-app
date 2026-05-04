@@ -57,19 +57,22 @@ export default function CurrentDiffChart({ records }) {
 
   const chartData = [...records]
     .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
-    .map((r) => ({
-      time: new Date(r.createdAt).toLocaleString('en-IN', {
-        day: 'numeric',
-        month: 'short',
-        hour: '2-digit',
-        minute: '2-digit',
-      }),
-      diff: Math.round((r.input - r.output) * 100) / 100,
-      input: r.input,
-      output: r.output,
-      theft: r.theft,
-      createdAt: r.createdAt,
-    }));
+    .map((r) => {
+      const d = new Date(r.createdAt);
+      const day = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const year = d.getFullYear();
+      const hours = String(d.getHours()).padStart(2, '0');
+      const minutes = String(d.getMinutes()).padStart(2, '0');
+      return {
+        time: `${day}-${month}-${year} ${hours}:${minutes}`,
+        diff: Math.round((r.input - r.output) * 100) / 100,
+        input: r.input,
+        output: r.output,
+        theft: r.theft,
+        createdAt: r.createdAt,
+      };
+    });
 
   return (
     <div className="glass-card p-5 animate-in-delay-1">

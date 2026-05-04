@@ -15,13 +15,12 @@ export default function AreaDetailPage({ records, loading, updateStatus }) {
   const [draftStatuses, setDraftStatuses] = useState({});
 
   const handleUpdateAll = async () => {
-    const updates = Object.entries(draftStatuses).map(([id, status]) => ({ id, status }));
+    const updates = Object.entries(draftStatuses).map(([id, status]) => ({ id, _id: id, status }));
     try {
       await updateStatus(updates);
       setDraftStatuses({});
     } catch (e) {
-      console.error(e);
-      alert('Failed to update status');
+      console.error('Update failed:', e);
     }
   };
 
