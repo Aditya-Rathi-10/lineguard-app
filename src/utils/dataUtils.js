@@ -185,8 +185,10 @@ export function getTheftIntensityColor(count) {
  * Calculate current difference percentage.
  */
 export function getCurrentLoss(input, output) {
-  if (input === 0) return 0;
-  return Math.round(((input - output) / input) * 10000) / 100;
+  const inp = Number(input) || 0;
+  const outp = Number(output) || 0;
+  if (inp === 0) return 0;
+  return Math.round(((inp - outp) / inp) * 10000) / 100;
 }
 
 /**
@@ -197,7 +199,9 @@ export function estimateFinancialLoss(records) {
   let totalLossA = 0;
   for (const r of records) {
     if (r.theft) {
-      totalLossA += (r.input - r.output);
+      const inp = Number(r.input) || 0;
+      const outp = Number(r.output) || 0;
+      totalLossA += (inp - outp);
     }
   }
   return Math.round(totalLossA * 46);

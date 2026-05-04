@@ -27,8 +27,8 @@ export async function fetchAllRecords() {
     // Normalize fields to match frontend expectations
     const normalizedData = recordsArray.map(record => ({
       ...record,
-      input: record.inCurrent !== undefined ? record.inCurrent : record.input,
-      output: record.outCurrent !== undefined ? record.outCurrent : record.output,
+      input: Number(record.inCurrent !== undefined ? record.inCurrent : (record.input || 0)),
+      output: Number(record.outCurrent !== undefined ? record.outCurrent : (record.output || 0)),
       createdAt: record.createdAt || record.timestamp || new Date().toISOString()
     }));
 
