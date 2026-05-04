@@ -6,7 +6,7 @@ import StatusBadge from '../components/ui/StatusBadge';
 import StatusDropdown from '../components/ui/StatusDropdown';
 import PoleTheftScatterChart from '../components/charts/PoleTheftScatterChart';
 import { SkeletonChart, SkeletonList } from '../components/ui/Skeletons';
-import { getPoleHistory, formatDateTime, getCurrentLoss, formatDate, calculateRiskScore, timeAgo } from '../utils/dataUtils';
+import { getPoleHistory, formatDateTime, getCurrentLoss, formatDate, timeAgo } from '../utils/dataUtils';
 
 export default function PoleDetailPage({ records, loading, updateStatus }) {
   const { poleId } = useParams();
@@ -129,13 +129,6 @@ export default function PoleDetailPage({ records, loading, updateStatus }) {
             <div className="flex justify-between text-sm mt-2 pt-3 border-t border-surface-800/50">
               <span className="text-surface-500">Loss</span>
               <span className={`font-bold ${loss > 10 ? 'text-danger-400' : 'text-success-400'}`}>{loss}%</span>
-            </div>
-            
-            <div className="flex justify-between text-sm">
-              <span className="text-surface-500">Risk Score</span>
-              <span className={`font-bold ${calculateRiskScore(poleRecords) > 50 ? 'text-danger-400' : 'text-warning-400'}`}>
-                {calculateRiskScore(poleRecords)}/100
-              </span>
             </div>
           </div>
         </div>

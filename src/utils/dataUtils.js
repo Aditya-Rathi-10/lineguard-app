@@ -206,23 +206,3 @@ export function estimateFinancialLoss(records) {
   }
   return Math.round(totalLossA * 0.46);
 }
-
-/**
- * Calculate a predictive risk score (0-100) based on theft frequency and severity.
- */
-export function calculateRiskScore(poleRecords) {
-  if (!poleRecords || poleRecords.length === 0) return 0;
-  
-  let score = 10; // Base score
-  // Frequency impact
-  score += poleRecords.length * 15;
-  
-  // Severity impact (from latest record)
-  const latest = poleRecords[0];
-  if (latest) {
-    const lossPct = getCurrentLoss(latest.input, latest.output);
-    score += lossPct * 2;
-  }
-  
-  return Math.min(Math.round(score), 100);
-}
